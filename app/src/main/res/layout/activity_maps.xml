@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <FrameLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/buttonMap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:layout_marginVertical="20dp"
-        android:text="Get Location" />
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -20,5 +11,43 @@
         android:layout_height="match_parent"
         tools:context=".MapsActivity" />
 
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="15dp" >
 
-    </FrameLayout>
+        <Button
+            android:id="@+id/getLocation"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="Get Location" />
+
+        <Button
+            android:id="@+id/finish"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:backgroundTint="#940101"
+            android:text="Finish" />
+
+    </TableRow>
+
+    <TextView
+        android:id="@+id/textMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total of Points: 0"
+        android:textSize="24sp"
+        android:paddingTop="0px"
+        android:layout_marginLeft="20px"
+        android:layout_marginTop="20px"
+        android:textStyle="bold"
+        android:gravity="top">
+
+    </TextView>
+
+
+</FrameLayout>
