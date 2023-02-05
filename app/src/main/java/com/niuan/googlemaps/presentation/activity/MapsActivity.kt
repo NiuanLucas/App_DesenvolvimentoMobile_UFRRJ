@@ -1,4 +1,4 @@
-package com.niuan.googlemaps.activity
+package com.niuan.googlemaps.presentation.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -18,7 +18,7 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.niuan.googlemaps.R
 import com.niuan.googlemaps.databinding.ActivityMapsBinding
-import com.niuan.googlemaps.helper.LocationHelper
+import com.niuan.googlemaps.core.helper.LocationHelper
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {

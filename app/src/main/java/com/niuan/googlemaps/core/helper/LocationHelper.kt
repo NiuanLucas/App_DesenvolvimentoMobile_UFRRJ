@@ -1,4 +1,4 @@
-package com.niuan.googlemaps.helper
+package com.niuan.googlemaps.core.helper
 
 import android.content.Context
 import android.location.LocationManager
