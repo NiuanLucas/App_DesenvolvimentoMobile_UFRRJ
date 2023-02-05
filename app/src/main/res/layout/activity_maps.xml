@@ -1,53 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MapsActivity" />
+        tools:context=".activity.MapsActivity" />
 
-    <TableRow
-        android:id="@+id/tableRow1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="15dp" >
-
-        <Button
-            android:id="@+id/getLocation"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="Get Location" />
-
-        <Button
-            android:id="@+id/finish"
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:backgroundTint="#940101"
-            android:text="Finish" />
-
-    </TableRow>
-
-    <TextView
-        android:id="@+id/textMap"
+    <Button
+        android:id="@+id/button_clear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Total of Points: 0"
-        android:textSize="24sp"
-        android:paddingTop="0px"
-        android:layout_marginLeft="20px"
-        android:layout_marginTop="20px"
-        android:textStyle="bold"
-        android:gravity="top">
+        android:text="Limpar marcadores"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
-    </TextView>
+    <Button
+        android:id="@+id/button_draw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Desenhar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
