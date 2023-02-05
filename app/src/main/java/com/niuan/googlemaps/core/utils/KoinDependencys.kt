@@ -6,6 +6,8 @@ import com.niuan.googlemaps.data.mappers.PolygonsToStringMapper
 import com.niuan.googlemaps.data.mappers.StringToPolygonsMapper
 import com.niuan.googlemaps.data.repositories.RepositoryImpl
 import com.niuan.googlemaps.domain.repositories.Repository
+import com.niuan.googlemaps.domain.usecases.GetPolygons
+import com.niuan.googlemaps.domain.usecases.SavePolygons
 import org.koin.dsl.module
 
 val modules = module {
@@ -14,4 +16,6 @@ val modules = module {
     single { PolygonsToStringMapper(get()) }
     single { StringToPolygonsMapper(get()) }
     single { RepositoryImpl(get(), get(), get()) }
+    single { GetPolygons(get()) }
+    single { SavePolygons(get()) }
 }
