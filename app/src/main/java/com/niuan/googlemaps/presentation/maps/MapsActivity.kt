@@ -1,10 +1,12 @@
-package com.niuan.googlemaps.presentation.activity
+package com.niuan.googlemaps.presentation.maps
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -19,42 +21,51 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.niuan.googlemaps.R
 import com.niuan.googlemaps.databinding.ActivityMapsBinding
 import com.niuan.googlemaps.core.helper.LocationHelper
-
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private var latLngList = ArrayList<LatLng>()
+    private val viewModel : MapsViewModel by viewModel()
     private var mMap: GoogleMap? = null
     private lateinit var binding: ActivityMapsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
+        viewModel.responseGetPolygons.observe(this){ polygons ->
+            addPolygons(polygons)
+        }
+
+        viewModel.responseSavePolygons.observe(this){result ->
+            Toast.makeText(this, result, Toast.LENGTH_SHORT).show()
+        }
+
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
 
     private fun initListeners(){
-        binding.buttonClear.setOnClickListener {
+
+        binding.deleteScreen.setOnClickListener {
             mMap?.clear()
-            latLngList = arrayListOf()
+        }
+        binding.deleteMemory.setOnClickListener {
+            viewModel.clearMemory()
+            mMap?.clear()
+        }
+
+        binding.savePolygon.setOnClickListener {
+            viewModel.savePolygons()
         }
 
         mMap?.setOnMapClickListener {
-            latLngList.add(it)
+            viewModel.latLngList.add(arrayListOf(it))
             mMap?.addMarker(MarkerOptions().position(it))
         }
 
-        binding.buttonDraw.setOnClickListener {
-            if (latLngList.isEmpty()) {
-                Toast.makeText(this, "Adicione marcadores para poder desenhar!", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            mMap?.addPolygon(
-                PolygonOptions()
-                    .clickable(true)
-                    .addAll(latLngList)
-            )
+        binding.loadPolygons.setOnClickListener {
+            viewModel.getPolygons()
         }
     }
 
@@ -64,6 +75,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             return
         }
         requestPermission()
+    }
+
+    private fun addPolygons(polygons : ArrayList<ArrayList<LatLng>>){
+
+        if (polygons.isEmpty()) {
+            Toast.makeText(this, "Voce não possui dados salvos", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val polygonOptions = PolygonOptions()
+        polygonOptions.addAll(polygons.flatten())
+        polygonOptions.fillColor(Color.RED)
+        mMap?.addPolygon(polygonOptions)
     }
 
     private fun initMap() {
@@ -76,7 +100,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMap?.isMyLocationEnabled = true;
+        mMap?.isMyLocationEnabled = true
         mMap?.uiSettings?.isMyLocationButtonEnabled = true
 
         initListeners()
