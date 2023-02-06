@@ -46,6 +46,7 @@ class MapsViewModel(
 
     fun clearMemory(){
         CoroutineScope(Dispatchers.IO).launch {
+            latLngList = arrayListOf()
             clearMemoryUseCase()
         }
     }

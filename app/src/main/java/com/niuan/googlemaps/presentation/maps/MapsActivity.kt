@@ -28,10 +28,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private val viewModel : MapsViewModel by viewModel()
     private var mMap: GoogleMap? = null
     private lateinit var binding: ActivityMapsBinding
+    private var polygonAux : ArrayList<LatLng> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
         viewModel.responseGetPolygons.observe(this){ polygons ->
             addPolygons(polygons)
@@ -47,6 +47,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun initListeners(){
 
+        binding.drawPolygon.setOnClickListener {
+            viewModel.latLngList.add(polygonAux)
+            mMap?.addPolygon(PolygonOptions().addAll(polygonAux).fillColor(Color.RED))
+            polygonAux = arrayListOf()
+        }
+
         binding.deleteScreen.setOnClickListener {
             mMap?.clear()
         }
@@ -60,7 +66,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         mMap?.setOnMapClickListener {
-            viewModel.latLngList.add(arrayListOf(it))
+            polygonAux.add(it)
             mMap?.addMarker(MarkerOptions().position(it))
         }
 
@@ -84,10 +90,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             return
         }
 
-        val polygonOptions = PolygonOptions()
-        polygonOptions.addAll(polygons.flatten())
-        polygonOptions.fillColor(Color.RED)
-        mMap?.addPolygon(polygonOptions)
+        polygons.forEach {
+            val polygonOptions = PolygonOptions()
+            polygonOptions.addAll(it)
+            polygonOptions.fillColor(Color.RED)
+            mMap?.addPolygon(polygonOptions)
+        }
     }
 
     private fun initMap() {
