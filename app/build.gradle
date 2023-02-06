@@ -51,6 +51,8 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.10.0-alpha02'
 
     implementation 'com.karumi:dexter:6.2.3'
+    implementation 'com.nambimobile.widgets:expandable-fab:1.2.1'
+
 
     implementation 'com.google.code.gson:gson:2.8.9'
     /* Koin */
