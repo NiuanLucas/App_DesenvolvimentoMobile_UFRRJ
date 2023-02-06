@@ -8,6 +8,7 @@ import com.niuan.googlemaps.data.mappers.PolygonsToStringMapper
 import com.niuan.googlemaps.data.mappers.StringToPolygonsMapper
 import com.niuan.googlemaps.data.repositories.RepositoryImpl
 import com.niuan.googlemaps.domain.repositories.Repository
+import com.niuan.googlemaps.domain.usecases.ClearMemory
 import com.niuan.googlemaps.domain.usecases.GetPolygons
 import com.niuan.googlemaps.domain.usecases.SavePolygons
 import com.niuan.googlemaps.presentation.maps.MapsViewModel
@@ -22,6 +23,7 @@ val modules = module {
     single { StringToPolygonsMapper(get()) }
     single { GetPolygons(get()) }
     single { SavePolygons(get()) }
+    single { ClearMemory(get()) }
     single<Repository> { RepositoryImpl(get(), get(), get()) }
-    viewModel {MapsViewModel(get(), get())}
+    viewModel {MapsViewModel(get(), get(), get())}
 }

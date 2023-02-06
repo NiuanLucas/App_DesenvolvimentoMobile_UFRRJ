@@ -19,7 +19,14 @@ class RepositoryImpl(
 
     override suspend fun getPolygon(): ArrayList<ArrayList<LatLng>> {
         val jsonString = localDataSource.getPolygon()
-        val polygons = stringToPolygonsMapper.map(jsonString)
-        return polygons
+        if (!jsonString.isNullOrEmpty()){
+            val polygons = stringToPolygonsMapper.map(jsonString)
+            return polygons
+        }
+        return arrayListOf()
+    }
+
+    override suspend fun clearMemory() {
+        localDataSource.clearMemory()
     }
 }

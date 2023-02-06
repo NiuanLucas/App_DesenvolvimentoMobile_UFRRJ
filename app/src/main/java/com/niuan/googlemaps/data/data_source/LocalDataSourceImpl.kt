@@ -8,5 +8,8 @@ class LocalDataSourceImpl(private val sharedPreferenceHelper: SharedPreferenceHe
     override suspend fun addPolygon(json : String) = sharedPreferenceHelper.saveJson(json)
 
     override suspend fun getPolygon() = sharedPreferenceHelper.getJson()
+    override suspend fun clearMemory() {
+        sharedPreferenceHelper.clearMemory()
+    }
 
 }

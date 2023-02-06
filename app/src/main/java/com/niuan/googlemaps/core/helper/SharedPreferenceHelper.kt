@@ -21,4 +21,8 @@ open class SharedPreferenceHelper(context: Context) {
     fun getJson(): String {
         return sharedPreferences.getString(TAG_JSON, "") ?: ""
     }
+
+    fun clearMemory() {
+        sharedPreferencesEditor.clear().commit()
+    }
 }
