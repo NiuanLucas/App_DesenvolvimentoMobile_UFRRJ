@@ -29,6 +29,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private var mMap: GoogleMap? = null
     private lateinit var binding: ActivityMapsBinding
     private var polygonAux : ArrayList<LatLng> = arrayListOf()
+    private val polygonColor = Color.GREEN
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,9 +49,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun initListeners(){
 
         binding.drawPolygon.setOnClickListener {
-            viewModel.latLngList.add(polygonAux)
-            mMap?.addPolygon(PolygonOptions().addAll(polygonAux).fillColor(Color.RED))
-            polygonAux = arrayListOf()
+            if(polygonAux.isNotEmpty()) {
+                viewModel.latLngList.add(polygonAux)
+                mMap?.addPolygon(PolygonOptions().addAll(polygonAux).fillColor(polygonColor))
+                polygonAux = arrayListOf()
+            }
+            else
+                Toast.makeText(this, "Insira pontos para traçar o poligono", Toast.LENGTH_SHORT).show()
         }
 
         binding.deleteScreen.setOnClickListener {
@@ -93,7 +98,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         polygons.forEach {
             val polygonOptions = PolygonOptions()
             polygonOptions.addAll(it)
-            polygonOptions.fillColor(Color.RED)
+            polygonOptions.fillColor(polygonColor)
             mMap?.addPolygon(polygonOptions)
         }
     }
