@@ -19,9 +19,8 @@ class RepositoryImpl(
 
     override suspend fun getPolygon(): ArrayList<ArrayList<LatLng>> {
         val jsonString = localDataSource.getPolygon()
-        if (!jsonString.isNullOrEmpty()){
-            val polygons = stringToPolygonsMapper.map(jsonString)
-            return polygons
+        if (jsonString.isNotEmpty()) {
+            return stringToPolygonsMapper.map(jsonString)
         }
         return arrayListOf()
     }
